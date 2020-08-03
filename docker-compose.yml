@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/storedata
+    networks:
+      - store
+  django:
+    container_name: django
+    build: .
+    volumes:
+      - .:/code
+    expose:
+      - 8000
+    env_file:
+      - .env
+    entrypoint: /entrypoint.sh
+    depends_on:
+      - db
+    networks:
+      - store
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./static:/var/www
+    networks:
+      - store
+    depends_on:
+      - django
+volumes:
+  pgdata:
+networks:
+  store:
