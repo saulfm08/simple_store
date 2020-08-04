@@ -28,6 +28,6 @@ class Product(models.Model):
         return self.name
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display  = ["name", "category", "created", "updated"]
+    list_display  = [ "id", "name", "category", "created", "updated"]
     search_fields = ["name", "category"]
 
