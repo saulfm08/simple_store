@@ -19,7 +19,7 @@ def product_get(request, pk):
     return Response(client.get_product(pk))
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated & permissions.IsAdminUser])
 def product_add(request):
     client = ProductClient()
     return Response(client.get_product(5))
